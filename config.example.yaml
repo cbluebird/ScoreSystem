@@ -1,0 +1,33 @@
+dev: true
+
+server:
+  port: "8080"
+  allow_origins:
+    - "http://127.0.0.1:3000"
+
+db:
+  user: "root"
+  password: "root"
+  address: "localhost:3306"
+  name: "scoresystem"
+
+jwt:
+  secret: "secretKey"
+  issuer: "issuer"
+  expires: 48
+
+email:
+  sender: "12345678@qq.com"
+  pwd:  "1234456"
+  smtpaddr: "smtp.qq.com"
+  smtpport: 465
+
+redis:
+  host: "127.0.0.1"
+  port: "6379"
+  db: 0
+  password:
+
+session:
+  name: score-system
+  driver: redis
