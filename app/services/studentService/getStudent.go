@@ -5,10 +5,10 @@ import (
 	"scoresystem/config/database"
 )
 
-func GetStudentById(id int) (*models.Student, error) {
-	student := models.Student{}
+func GetUserById(id int) (*models.User, error) {
+	student := models.User{}
 	result := database.DB.Where(
-		&models.Student{
+		&models.User{
 			ID: id,
 		},
 	).First(&student)

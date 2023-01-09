@@ -24,13 +24,13 @@ func CheckUserSession(c *gin.Context) bool {
 	return true
 }
 
-func GetStudentSession(c *gin.Context) (*models.Student, error) {
+func GetUserSession(c *gin.Context) (*models.User, error) {
 	webSession := sessions.Default(c)
 	id := webSession.Get("id")
 	if id == nil {
 		return nil, errors.New("")
 	}
-	user, _ := studentService.GetStudentById(id.(int))
+	user, _ := studentService.GetUserById(id.(int))
 	if user == nil {
 		ClearUserSession(c)
 		return nil, errors.New("")
@@ -38,7 +38,7 @@ func GetStudentSession(c *gin.Context) (*models.Student, error) {
 	return user, nil
 }
 
-func SetStudentSession(c *gin.Context, user *models.Student) error {
+func SetStudentSession(c *gin.Context, user *models.User) error {
 	webSession := sessions.Default(c)
 	webSession.Options(sessions.Options{MaxAge: 3600 * 24 * 7})
 	webSession.Set("id", user.ID)
