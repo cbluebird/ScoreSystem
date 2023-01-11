@@ -8,8 +8,8 @@ func Init(r *gin.Engine) {
 
 	const pre = "/api"
 
-	//api := r.Group(pre)
-	//{
-	//
-	//}
+	api := r.Group(pre)
+	{
+		userRouterInit(api)
+	}
 }

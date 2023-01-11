@@ -1,18 +1,19 @@
-package user
+package userController
 
 import (
 	"github.com/gin-gonic/gin"
+	"log"
 	"scoresystem/app/services/sessionService"
 	"scoresystem/app/services/userService"
 	"scoresystem/app/utility"
 )
 
 type LoginData struct {
-	Account  string
-	Password string
+	Account  string `json:"account"`
+	Password string `json:"password"`
 }
 
-func login(c *gin.Context) {
+func Login(c *gin.Context) {
 	var data LoginData
 	err := c.ShouldBindJSON(&data)
 	if err != nil {
@@ -27,7 +28,13 @@ func login(c *gin.Context) {
 	flag := userService.CheckUserByPassword(user, data.Password)
 	if !flag {
 		utility.JsonResponse(405, "密码错误", nil, c)
+		return
 	}
-	sessionService.SetStudentSession(c, user)
+	err = sessionService.SetStudentSession(c, user)
+	if err != nil {
+		log.Println(err)
+		utility.JsonResponseInternalServerError(c)
+		return
+	}
 	utility.JsonSuccessResponse(c, nil)
 }

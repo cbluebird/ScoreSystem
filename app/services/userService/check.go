@@ -6,7 +6,7 @@ import (
 )
 
 func CheckUserByPassword(user *models.User, password string) bool {
-	pass := utility.Encryrpt(user.Password)
+	pass := utility.Encryrpt(password)
 	if user.Password != pass {
 		return false
 	} else {
