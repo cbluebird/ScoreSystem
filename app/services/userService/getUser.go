@@ -1,4 +1,4 @@
-package studentService
+package userService
 
 import (
 	"scoresystem/app/models"
@@ -16,4 +16,17 @@ func GetUserById(id int) (*models.User, error) {
 		return nil, result.Error
 	}
 	return &student, nil
+}
+
+func GetUserByAccount(account string) (*models.User, error) {
+	user := models.User{}
+	result := database.DB.Where(
+		&models.User{
+			Account: account,
+		},
+	).First(&user)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return &user, nil
 }

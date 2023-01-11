@@ -5,7 +5,7 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"scoresystem/app/models"
-	"scoresystem/app/services/studentService"
+	"scoresystem/app/services/userService"
 )
 
 func ClearUserSession(c *gin.Context) {
@@ -30,7 +30,7 @@ func GetUserSession(c *gin.Context) (*models.User, error) {
 	if id == nil {
 		return nil, errors.New("")
 	}
-	user, _ := studentService.GetUserById(id.(int))
+	user, _ := userService.GetUserById(id.(int))
 	if user == nil {
 		ClearUserSession(c)
 		return nil, errors.New("")
