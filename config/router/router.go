@@ -11,5 +11,7 @@ func Init(r *gin.Engine) {
 	api := r.Group(pre)
 	{
 		userRouterInit(api)
+		studentRouterInit(api)
+		adminRouterInit(api)
 	}
 }
