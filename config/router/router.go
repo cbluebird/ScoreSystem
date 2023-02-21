@@ -13,5 +13,6 @@ func Init(r *gin.Engine) {
 		userRouterInit(api)
 		studentRouterInit(api)
 		adminRouterInit(api)
+		squareRouterInit(api)
 	}
 }

@@ -2,6 +2,7 @@ package userService
 
 import (
 	"scoresystem/app/models"
+	"scoresystem/app/services/adminService"
 	"scoresystem/app/utility"
 	"scoresystem/config/database"
 )
@@ -17,6 +18,10 @@ func CreateUser(user models.Reg) error {
 		Name:       user.Name,
 	}
 	result := database.DB.Create(user1)
+	if user1.Admin == 1 {
+		adminService.CreateAdmin(*user1)
+
+	}
 	if result.Error != nil {
 		return result.Error
 	} else {

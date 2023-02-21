@@ -14,7 +14,7 @@ func Add(user *models.User, data models.ApplicationData) error {
 		CreateTime:  time.Now(),
 		AdminId:     data.Admin,
 		Description: data.Description,
-		Status:      0,
+		Sta:         5,
 		Userid:      user.ID,
 		Score:       data.Score,
 	}

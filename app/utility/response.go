@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func JsonResponse(code int, msg string, data gin.H, c *gin.Context) {
+func JsonResponse(code int, msg string, data interface{}, c *gin.Context) {
 	c.JSON(200, gin.H{
 		"code": code,
 		"msg":  msg,

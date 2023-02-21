@@ -1,36 +1,36 @@
 package adminController
 
 import (
-	"github.com/gin-gonic/gin"
 	"scoresystem/app/apiExpection"
-	"scoresystem/app/services/adminService"
+	"scoresystem/app/models"
 	"scoresystem/app/services/sessionService"
 	"scoresystem/app/utility"
+	"scoresystem/config/database"
+
+	"github.com/gin-gonic/gin"
 )
 
-type JudgeData struct {
-	Status int    `json:"status"`
-	Id     int    `json:"id"`
+type Reason struct {
 	Reason string `json:"reason"`
 }
 
-func Jugde(c *gin.Context) {
-	var data JudgeData
+func PulishReason(c *gin.Context) {
+	var data Reason
 	err := c.ShouldBindJSON(&data)
 	if err != nil {
 		utility.JsonResponseInternalServerError(c)
 		return
 	}
 	user, err1 := sessionService.GetUserSession(c)
-	if err1 != nil || user.Admin == 0 {
+	if err1 != nil {
 		_ = c.AbortWithError(200, apiExpection.NotLogin)
 		return
 	}
-	flag := adminService.GetApp(data.Id, user)
-	if !flag {
-		utility.JsonResponse(404, "找不到对应的申请", nil, c)
+	adv := models.Reason{Reason: data.Reason, AdminID: user.ID}
+	error := database.DB.Create(&adv).Error
+	if error != nil {
+		utility.JsonResponseInternalServerError(c)
 		return
 	}
-	err = adminService.Judge(data.Status, data.Id, data.Reason)
 	utility.JsonSuccessResponse(c, nil)
 }

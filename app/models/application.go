@@ -12,8 +12,9 @@ type Application struct {
 	Userid      int
 	Score       float32
 	Description string
-	Status      int
+	Sta         int
 	AdminId     int
+	Reason      string
 }
 type ApplicationData struct {
 	Module      int     `json:"module"`
@@ -22,4 +23,7 @@ type ApplicationData struct {
 	Description string  `json:"description"`
 	Score       float32 `json:"score"`
 	Admin       int     `json:"admin"`
+	Reason      string  `json:"reason"`
 }
+
+var Authority [10][10]int
