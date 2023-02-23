@@ -2,9 +2,11 @@ package scoreService
 
 import (
 	"log"
+	"runtime"
 	"scoresystem/app/models"
 	"scoresystem/app/models/modules"
 	"scoresystem/config/database"
+	"sync"
 )
 
 func GetAllScore(userid, year int) (models.Score, error) {
@@ -22,20 +24,56 @@ func GetAllScore(userid, year int) (models.Score, error) {
 }
 
 func GetDetail(userid, year int) ([]modules.Detail, error) {
+	//var list []modules.Detail
+	//var list1 []modules.Detail
+	//list1, _ = GetArt(userid, year)
+	//list = append(list, list1...)
+	//list1, _ = GetGpa(userid, year)
+	//list = append(list, list1...)
+	//list1, _ = GetPe(userid, year)
+	//list = append(list, list1...)
+	//list1, _ = GetInnovate(userid, year)
+	//list = append(list, list1...)
+	//list1, _ = GetLabour(userid, year)
+	//list = append(list, list1...)
+	//list1, _ = GetMoral(userid, year)
+	//list = append(list, list1...)
+	//return list, nil
 	var list []modules.Detail
-	var list1 []modules.Detail
-	list1, _ = GetArt(userid, year)
-	list = append(list, list1...)
-	list1, _ = GetGpa(userid, year)
-	list = append(list, list1...)
-	list1, _ = GetPe(userid, year)
-	list = append(list, list1...)
-	list1, _ = GetInnovate(userid, year)
-	list = append(list, list1...)
-	list1, _ = GetLabour(userid, year)
-	list = append(list, list1...)
-	list1, _ = GetMoral(userid, year)
-	list = append(list, list1...)
+	var wg sync.WaitGroup
+	runtime.GOMAXPROCS(6)
+	wg.Add(6)
+	go func() {
+		defer wg.Done()
+		list1, _ := GetArt(userid, year)
+		list = append(list, list1...)
+	}()
+	go func() {
+		defer wg.Done()
+		list1, _ := GetGpa(userid, year)
+		list = append(list, list1...)
+	}()
+	go func() {
+		defer wg.Done()
+		list1, _ := GetPe(userid, year)
+		list = append(list, list1...)
+	}()
+	go func() {
+		defer wg.Done()
+		list1, _ := GetInnovate(userid, year)
+		list = append(list, list1...)
+	}()
+	go func() {
+		defer wg.Done()
+		list1, _ := GetLabour(userid, year)
+		list = append(list, list1...)
+	}()
+	go func() {
+		defer wg.Done()
+		list1, _ := GetMoral(userid, year)
+		list = append(list, list1...)
+	}()
+	wg.Wait()
 	return list, nil
 }
 

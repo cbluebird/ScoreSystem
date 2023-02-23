@@ -11,7 +11,7 @@ type Art struct {
 	Age           int
 	Class         int
 	CreateTime    time.Time
-	Userid        int
+	Userid        int `gorm:"uniqueIndex"`
 	Score         float32
 	Description   string
 	Type          int

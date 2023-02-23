@@ -1,6 +1,7 @@
 package adminController
 
 import (
+	"log"
 	"scoresystem/app/apiExpection"
 	"scoresystem/app/models"
 	"scoresystem/app/models/modules"
@@ -26,6 +27,7 @@ type Score struct {
 func Putscore(c *gin.Context) {
 	var data Score
 	err := c.ShouldBindJSON(&data)
+	log.Println(data)
 	if err != nil {
 		utility.JsonResponseInternalServerError(c)
 		return
