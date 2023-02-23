@@ -1,3 +1,3 @@
 .idea*
-config.yaml
 .vscode*
+gin/config.yaml
