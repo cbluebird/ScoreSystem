@@ -2,7 +2,6 @@ package studentController
 
 import (
 	"github.com/gin-gonic/gin"
-	"log"
 	"scoresystem/app/apiExpection"
 	"scoresystem/app/services/scoreService"
 	"scoresystem/app/services/userService"
@@ -26,7 +25,6 @@ func GetAll(c *gin.Context) {
 	year_ := c.Query("year")
 	year, _ := strconv.Atoi(year_)
 	list, _ := scoreService.GetAllScore(user.ID, year)
-	log.Println(list)
 	utility.JsonResponse(200, "ok", gin.H{
 		"Score": list.Grade,
 	}, c)

@@ -36,5 +36,6 @@ func GetUnprocessedApplication(c *gin.Context) {
 	}
 	utility.JsonResponse(200, "ok", gin.H{
 		"application": application,
+		"total":       len(application),
 	}, c)
 }

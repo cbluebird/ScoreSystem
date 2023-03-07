@@ -1,7 +1,6 @@
 package scoreService
 
 import (
-	"log"
 	"runtime"
 	"scoresystem/app/models"
 	"scoresystem/app/models/modules"
@@ -11,12 +10,12 @@ import (
 
 func GetAllScore(userid, year int) (models.Score, error) {
 	var score models.Score
+	UpdateScore(userid, year)
 	result := database.DB.Where(
 		models.Score{
 			Userid: userid,
 			Year:   year,
 		}).First(&score)
-	log.Println(score)
 	if result.Error != nil {
 		return score, result.Error
 	}

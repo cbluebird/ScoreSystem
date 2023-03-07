@@ -2,6 +2,7 @@ package adminController
 
 import (
 	"github.com/gin-gonic/gin"
+	"log"
 	"scoresystem/app/apiExpection"
 	"scoresystem/app/services/adminService"
 	"scoresystem/app/services/userService"
@@ -18,6 +19,7 @@ type JudgeData struct {
 func Jugde(c *gin.Context) {
 	var data JudgeData
 	err := c.ShouldBindJSON(&data)
+	log.Println(data)
 	if err != nil {
 		utility.JsonResponseInternalServerError(c)
 		return

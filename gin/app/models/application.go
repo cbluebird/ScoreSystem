@@ -10,7 +10,7 @@ type Application struct {
 	Class       int
 	CreateTime  time.Time
 	Userid      int
-	Score       float32
+	Score       float64
 	Description string
 	Sta         int
 	AdminId     int
@@ -21,7 +21,7 @@ type ApplicationData struct {
 	Age         int     `json:"age"`
 	Class       int     `json:"class"`
 	Description string  `json:"description"`
-	Score       float32 `json:"score"`
+	Score       float64 `json:"score"`
 	Admin       int     `json:"admin"`
 	Reason      string  `json:"reason"`
 	Userid      int     `json:"userid"`

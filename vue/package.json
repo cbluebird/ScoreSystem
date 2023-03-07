@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "element-ui": "^2.15.12",
+    "js-cookie": "^3.0.1",
+    "vue-resource": "^1.5.3"
+  }
+}

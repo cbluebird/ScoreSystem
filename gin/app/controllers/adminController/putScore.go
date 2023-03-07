@@ -15,7 +15,7 @@ import (
 )
 
 type Score struct {
-	Score       float32 `json:"score"`
+	Score       float64 `json:"score"`
 	Module      int     `json:"module"`
 	StudentName string  `json:"studentname"`
 	Class       int     `json:"class"`
@@ -171,7 +171,7 @@ func Putscore(c *gin.Context) {
 	switch data.Module {
 	case 1:
 		{
-			crt := modules.Art{Age: data.Age, Class: data.Class, CreateTime: time.Now(), Userid: student.ID, Score: float32(data.Score), ApplicationID: 0}
+			crt := modules.Art{Description: "模块成绩",Age: data.Age, Class: data.Class, CreateTime: time.Now(), Userid: student.ID, Score: float64(data.Score), ApplicationID: 0}
 			error := database.DB.Create(&crt).Error
 			if error != nil {
 				utility.JsonResponseInternalServerError(c)
@@ -180,7 +180,7 @@ func Putscore(c *gin.Context) {
 		}
 	case 2:
 		{
-			crt := modules.GPA{Age: data.Age, Class: data.Class, CreateTime: time.Now(), Userid: student.ID, Score: float32(data.Score), ApplicationID: 0}
+			crt := modules.GPA{Description: "模块成绩",Age: data.Age, Class: data.Class, CreateTime: time.Now(), Userid: student.ID, Score: float64(data.Score), ApplicationID: 0}
 			error := database.DB.Create(&crt).Error
 			if error != nil {
 				utility.JsonResponseInternalServerError(c)
@@ -189,7 +189,7 @@ func Putscore(c *gin.Context) {
 		}
 	case 3:
 		{
-			crt := modules.Innovate{Age: data.Age, Class: data.Class, CreateTime: time.Now(), Userid: student.ID, Score: float32(data.Score), ApplicationID: 0}
+			crt := modules.Innovate{Description: "模块成绩",Age: data.Age, Class: data.Class, CreateTime: time.Now(), Userid: student.ID, Score: float64(data.Score), ApplicationID: 0}
 			error := database.DB.Create(&crt).Error
 			if error != nil {
 				utility.JsonResponseInternalServerError(c)
@@ -198,7 +198,7 @@ func Putscore(c *gin.Context) {
 		}
 	case 4:
 		{
-			crt := modules.Labour{Age: data.Age, Class: data.Class, CreateTime: time.Now(), Userid: student.ID, Score: float32(data.Score), ApplicationID: 0}
+			crt := modules.Labour{Description: "模块成绩",Age: data.Age, Class: data.Class, CreateTime: time.Now(), Userid: student.ID, Score: float64(data.Score), ApplicationID: 0}
 			error := database.DB.Create(&crt).Error
 			if error != nil {
 				utility.JsonResponseInternalServerError(c)
@@ -207,7 +207,7 @@ func Putscore(c *gin.Context) {
 		}
 	case 5:
 		{
-			crt := modules.Moral{Age: data.Age, Class: data.Class, CreateTime: time.Now(), Userid: student.ID, Score: float32(data.Score), ApplicationID: 0}
+			crt := modules.Moral{Description: "模块成绩",Age: data.Age, Class: data.Class, CreateTime: time.Now(), Userid: student.ID, Score: float64(data.Score), ApplicationID: 0}
 			error := database.DB.Create(&crt).Error
 			if error != nil {
 				utility.JsonResponseInternalServerError(c)
@@ -216,7 +216,7 @@ func Putscore(c *gin.Context) {
 		}
 	case 6:
 		{
-			crt := modules.Pe{Age: data.Age, Class: data.Class, CreateTime: time.Now(), Userid: student.ID, Score: float32(data.Score), ApplicationID: 0}
+			crt := modules.Pe{Description: "模块成绩",Age: data.Age, Class: data.Class, CreateTime: time.Now(), Userid: student.ID, Score: float64(data.Score), ApplicationID: 0}
 			error := database.DB.Create(&crt).Error
 			if error != nil {
 				utility.JsonResponseInternalServerError(c)

@@ -1,0 +1,215 @@
+<template>
+  <div>
+    <el-card>
+      <el-table :data="applicationList" border stripe>
+        <el-table-column label="#" type="index"></el-table-column>
+        <el-table-column label="申请项" prop="Class"></el-table-column>
+        <el-table-column label="申请理由" prop="Description"></el-table-column>
+        <el-table-column label="申请分数" prop="Score"></el-table-column>
+        <el-table-column
+            prop="Sta"
+            label="状态">
+
+          <template slot-scope="scope">
+            <el-button  type="text"
+                        :disabled="scope.row.Sta =='未通过，点击重新申请' ? false : true"
+                        disable-transitions
+                        @click="reapply(scope.row.ID)"
+            >{{scope.row.Sta}}</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <el-pagination
+          @current-change="handleCurrentChange"
+          :current-page="queryInfo.pagenum"
+          @size-change="handleSizeChange"
+          :page-size="queryInfo.pagesize"
+          :page-sizes="[1,2,5,10]"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
+      >
+      </el-pagination>
+    </el-card>
+    <el-dialog
+        title="重新申请"
+        :visible.sync="addDialogVisible"
+        width="50%">
+      <!--内容主题区-->
+      <el-input
+          type="textarea"
+          :rows="6"
+          placeholder="请输入内容"
+          v-model="reapplylist.reason"
+          maxlength="200"
+          show-word-limit>
+
+      </el-input>
+
+      <!--底部区-->
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="addDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="publishReason">确 定</el-button>
+  </span>
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+export default {
+  data(){
+    return{
+      queryInfo: {
+        query: '',
+        pagenum: 1,
+        pagesize: 5,
+        userid: 0
+      },
+      applicationList:[],
+      total: 0 ,
+      addDialogVisible :false,
+
+      reapplylist:{
+        applicationid:0,
+        reason:'',
+        userid:0
+      }
+    }
+  },
+  created(){
+    this.getList()
+  },
+  methods:{
+    async getList(){
+      this.queryInfo.userid=JSON.parse(window.sessionStorage.getItem('userid'))
+      const { data : res } = await  this.$axios.get('/api/student/inquire',{
+        params : this.queryInfo
+      });
+      const result  = await  this.$axios.get('/api/student/inquire',{
+        params : this.queryInfo
+      })
+      ///instructor/scoresearch
+      if (result.status !== 200) return this.$message.error('获取列表失败')
+      console.log(res)
+      this.applicationList = res.data.application
+      this.total= res.data.total
+      var length = this.applicationList.length
+      for(var i=0;i<length;i++){
+
+        switch(this.applicationList[i].Module){
+          case 1 :
+            switch(this.applicationList[i].Class) {
+              case 1 :
+                this.applicationList[i].Class = '美育素质--文化艺术实践成绩'
+                break;
+              case 2:
+                this.applicationList[i].Class = '美育素质--文化艺术竞赛获奖得分'
+                break;
+            }
+            break;
+          case 2 :
+            this.applicationList[i].Class = '智育素质--智育平均学分绩点'
+            break;
+          case 3 :
+            switch(this.applicationList[i].Class){
+              case 1 : this.applicationList[i].Class = '创新与实践素质--创新创业竞赛获奖得分'
+                break;
+              case 2 : this.applicationList[i].Class = '创新与实践素质--创新创业竞赛获奖得分'
+                break;
+              case 3 : this.applicationList[i].Class = '创新与实践素质--社会实践活动'
+                break;
+              case 4 : this.applicationList[i].Class = '创新与实践素质--社会工作'
+                break;
+            }
+            break;
+          case 4 :
+            switch(this.applicationList[i].Class){
+              case 1 : this.applicationList[i].Class = '劳育素质--寝室日常考核基本分'
+                break;
+              case 2 : this.applicationList[i].Class = '劳育素质--“文明寝室”创建、寝室风采展等活动加分'
+                break;
+              case 3 : this.applicationList[i].Class = '劳育素质--寝室行为表现与卫生状况加减分'
+                break;
+              case 4 : this.applicationList[i].Class = '劳育素质--志愿服务分'
+                break;
+              case 5 : this.applicationList[i].Class = '劳育素质--实习实训'
+                break;
+            }
+            break;
+          case 5 :
+            switch(this.applicationList[i].Class){
+              case 1 : this.applicationList[i].Class = '德育素质--基本评定分'
+                break;
+              case 2 : this.applicationList[i].Class = '德育素质--集体评定等级分'
+                break;
+              case 3 : this.applicationList[i].Class = '德育素质--社会责任记实分'
+                break;
+              case 4 : this.applicationList[i].Class = '德育素质--思政学习加减分'
+                break;
+              case 5 : this.applicationList[i].Class = '德育素质--违纪违规扣分'
+                break;
+              case 6 : this.applicationList[i].Class = '德育素质--学生荣誉称号加减分'
+                break;
+            }
+            break;
+          case 6 :
+            switch(this.applicationList[i].Class){
+              case 1 : this.applicationList[i].Class = '体育素质--体育课程成绩'
+                break;
+              case 2 : this.applicationList[i].Class = '体育素质--课外体育活动成绩'
+                break;
+              case 3 : this.applicationList[i].Class = '体育素质--体育竞赛获奖得分'
+                break;
+              case 4 : this.applicationList[i].Class = '体育素质--早锻炼得分'
+                break;
+            }
+            break;
+        }
+      }
+      var length = this.applicationList.length
+      for(var i=0;i<length;i++){
+        switch(this.applicationList[i].Sta){
+          case 1 : this.applicationList[i].Sta = '已通过'
+            break;
+          case 2 : this.applicationList[i].Sta = '未通过，点击重新申请'
+            break;
+          case 3 : this.applicationList[i].Sta = '重新申请中'
+            break;
+          default : this.applicationList[i].Sta = '审批中'
+            break;
+        }
+      }
+    },
+    // 监听 pagesize 改变事件 每页显示的个数
+    handleSizeChange(newSize) {
+      console.log(newSize)
+      this.queryInfo.pagesize = newSize
+      this.getList()
+    },
+    // 监听 页码值 改变的事件 当前页面值
+    handleCurrentChange(newPage) {
+      console.log(newPage)
+      this.queryInfo.pagenum = newPage
+      this.getList()
+    },
+    async reapply(ID){
+      this.reapplylist.applicationid=ID
+      this.addDialogVisible = true
+
+    },
+    async publishReason() {
+      this.reapplylist.userid=JSON.parse(window.sessionStorage.getItem('userid'))
+
+      const res = await this.$axios.post('/api/student/creatappeal',this.reapplylist)
+      console.log('提交成功')
+      console.log(this.reapplylist)
+      this.getList()
+      this.addDialogVisible = false
+    }
+  }
+}
+</script>
+
+<style>
+
+</style>

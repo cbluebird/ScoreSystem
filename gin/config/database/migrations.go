@@ -22,5 +22,6 @@ func autoMigrate(db *gorm.DB) error {
 		&models.Admin{},
 		&models.Advice{},
 		&models.Appeal{},
+		&models.Rule{},
 	)
 }

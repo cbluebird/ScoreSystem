@@ -55,7 +55,7 @@ func GetReapprovedApplication(c *gin.Context) {
 	}
 	utility.JsonResponse(200, "ok", gin.H{
 		"application": application,
-		"total":       total,
+		"total":       len(application),
 		"page":        page,
 		"pagesize":    pageSize,
 	}, c)

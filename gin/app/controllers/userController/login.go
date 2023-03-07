@@ -37,7 +37,9 @@ func Login(c *gin.Context) {
 		return
 	}
 	utility.JsonResponse(200, "ok", gin.H{
-		"userid": user.ID,
-		"admin":  user.Admin,
+		"userid":     user.ID,
+		"admin":      user.Admin,
+		"name":       user.Name,
+		"profession": user.Profession,
 	}, c)
 }

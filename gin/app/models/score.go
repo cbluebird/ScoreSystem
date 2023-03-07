@@ -4,5 +4,5 @@ package models
 type Score struct {
 	Userid int
 	Year   int
-	Grade  float32
+	Grade  float64
 }
